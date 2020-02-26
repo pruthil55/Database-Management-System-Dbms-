@@ -1,0 +1,35 @@
+set serveroutput on;
+declare
+    cursor c1 is select deptno,dname from dept;
+    cursor c2(dept_no number) is select * from emp where deptno = dept_no;
+    i2 dept.deptno%type;
+    j dept.dname%type;
+    i1 emp%rowtype;
+begin
+    open c1;
+    loop
+    
+    fetch c1 into i2,j;
+    exit when c1%notfound;
+    dbms_output.put_line('dept no:' || i2 || '  dept name:' || j);
+    dbms_output.put_line(chr(10));
+    dbms_output.put_line('');
+        open c2(i2);
+        loop
+        
+        fetch c2 into i1;
+        exit when c2%notfound;
+        dbms_output.put_line('emp no :' || i1.empno );
+        dbms_output.put_line('emp name :' || i1.ename );
+        dbms_output.put_line('emp job :' || i1.job );
+        dbms_output.put_line('emp sal :' || i1.sal );
+        dbms_output.put_line(chr(10));
+        
+    end loop;
+        close c2;
+
+            
+    end loop;
+    close c1;
+end;
+    

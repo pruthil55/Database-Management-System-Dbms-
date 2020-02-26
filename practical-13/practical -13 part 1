@@ -1,0 +1,13 @@
+set serveroutput on
+declare
+v_emp emp%rowtype;
+cursor emp_cursor is select * from emp;
+begin 
+ open emp_cursor;
+ loop
+  fetch emp_cursor into v_emp;
+  exit when emp_cursor%notfound;
+dbms_output.put_line (v_emp.empno ||'    ' || v_emp.ename || '    ' || v_emp.job|| '        ' || v_emp.mgr|| '    ' || v_emp.hiredate || '    ' || v_emp.sal|| '    ' || v_emp.comm|| '    ' || v_emp.deptno);
+end loop;
+close emp_cursor;
+end;
